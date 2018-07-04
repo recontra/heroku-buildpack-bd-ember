@@ -4,8 +4,13 @@ indent() {
   sed -u 's/^/       /'
 }
 
-echo "-----> Installing bower and ember-cli"
-npm -g install ember-cli bower
+echo "----->Checking node version"
+node -v | indent
+echo "----->Checking npm version"
+npm -v | indent
 
-echo "-----> Install packages and build BD ember admin app"
-cd $1/ember_admin && npm install && bower update && ember build --environment=production && cd ..
+# echo "-----> Installing bower and ember-cli"
+# npm -g install ember-cli bower | indent
+
+# echo "-----> Install packages and build BD ember admin app"
+# cd $1/ember_admin && npm install && bower update && ember build --environment=production && cd ..
