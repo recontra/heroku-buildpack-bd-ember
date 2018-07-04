@@ -19,4 +19,12 @@ bower install 2>&1 | indent
 ember build --environment=production | indent
 cd ..
 
-echo "-----> Pluging ember app into rails app"
+echo "-----> Copying assets in rails public folder"
+# copy all files from the dist folder into assets
+rm -rf $1/public/ember/assets/*
+rm -rf $1/public/ember/fonts/*
+rm -rf $1/public/images/ember/*
+
+cp -Rf $1/ember_admin/dist/assets $1/public/ember
+cp -Rf $1/ember_admin/dist/fonts $1/public/ember
+cp -Rf $1/ember_admin/dist/images/ember $1/public/images/ember
