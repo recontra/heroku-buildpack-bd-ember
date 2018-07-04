@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# this pack is valid for betterdoc application with package.json inside ember_admin (ember app folder)
+if [ -f $1/ember_admin/package.json ]; then
+  echo "Ember.js BD admin"
+  exit 0
+else
+  echo 'Ember.js BD admin: package.json not found in ember application root'
+  exit 1
+fi
