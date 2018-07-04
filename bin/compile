@@ -8,11 +8,15 @@ echo "-----> Checking node version"
 node -v | indent
 echo "-----> Checking npm version"
 npm -v | indent
-echo "-----> Checking bower version"
-bower -v | indent
 
-echo "-----> Installing bower and ember-cli"
-npm -g install ember-cli | indent
+echo "-----> Installing ember-cli"
+npm -g install bower ember-cli 2>&1 | indent
 
-# echo "-----> Install packages and build BD ember admin app"
-# cd $1/ember_admin && npm install && bower update && ember build --environment=production && cd ..
+echo "-----> Install packages and build BD ember admin app"
+cd $1/ember_admin
+npm install 2>&1 | indent
+bower install 2>&1 | indent
+ember build --environment=production | indent
+cd ..
+
+echo "-----> Pluging ember app into rails app"
