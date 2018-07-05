@@ -29,7 +29,7 @@ mkdir public/images/ember
 
 cp -Rf ember_admin/dist/assets public/ember
 cp -Rf ember_admin/dist/fonts public/ember
-cp -Rf ember_admin/dist/images/ember public/images/ember
+cp -Rf ember_admin/dist/images/ember public/images
 
 BIN_DIR=$(cd $(dirname $0); pwd)
 $BIN_DIR/ember_plugger $1
