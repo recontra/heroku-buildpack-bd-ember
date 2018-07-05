@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'nokogiri'
+require 'erb'
+require 'pathname'
+
+rails_root = Pathname.new(ARGV[0])
+ember_folder = rails_root.join("ember_admin")
+puts "-----> Plugging ember in BD app (#{rails_root})"
+
+# parse the index.html file and pull out meta tags
+index = Nokogiri.parse(File.read(ember_folder.join("dist/index.html")))
+meta_content = index.css("meta[name='ember-admin/config/environment']").first['content']
+stylesheets = index.css("link[rel='stylesheet']").map { |elem| elem.attributes["href"].value }
+javascripts = index.css("script").map { |elem| elem["src"] }
+content_for_body = index.css("div[id='content-for__body']")
+content_for_body_footer = index.css("div[id='content-for__body-footer']")
+entry_zone_file = rails_root.join('app/views/admin/new/index.html.erb')
+
+@options = {
+  base_href: '/backstage/new',
+  meta_content: meta_content,
+  stylesheets: stylesheets,
+  javascripts: javascripts,
+  content_for_body: content_for_body,
+  content_for_body_footer: content_for_body_footer
+}
+
+puts "-----> Creating entry zone file for ember app"
+template = ERB.new(File.read(rails_root.join('lib/templates/erb/ember.erb')))
+system "mkdir -p #{rails_root.join('app/views/admin/new')}"
+File.open(entry_zone_file, 'wb+') do |f|
+  f.write template.result
+end
+puts "-----> Ember app plugged in"

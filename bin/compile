@@ -28,3 +28,5 @@ rm -rf $1/public/images/ember/*
 cp -Rf $1/ember_admin/dist/assets $1/public/ember
 cp -Rf $1/ember_admin/dist/fonts $1/public/ember
 cp -Rf $1/ember_admin/dist/images/ember $1/public/images/ember
+
+ember_plugger $1
