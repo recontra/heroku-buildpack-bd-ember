@@ -21,13 +21,15 @@ cd ..
 
 echo "-----> Copying assets in rails public folder"
 # copy all files from the dist folder into assets
-rm -rf $1/public/ember/assets/*
-rm -rf $1/public/ember/fonts/*
-rm -rf $1/public/images/ember/*
+rm -Rf public/ember/
+rm -Rf public/images/ember/
 
-cp -Rf $1/ember_admin/dist/assets $1/public/ember
-cp -Rf $1/ember_admin/dist/fonts $1/public/ember
-cp -Rf $1/ember_admin/dist/images/ember $1/public/images/ember
+mkdir public/ember
+mkdir public/images/ember
+
+cp -Rf ember_admin/dist/assets public/ember
+cp -Rf ember_admin/dist/fonts public/ember
+cp -Rf ember_admin/dist/images/ember public/images/ember
 
 BIN_DIR=$(cd $(dirname $0); pwd)
 $BIN_DIR/ember_plugger $1
