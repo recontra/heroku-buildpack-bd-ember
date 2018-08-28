@@ -4,6 +4,21 @@ indent() {
   sed -u 's/^/       /'
 }
 
+export_env_dir() {
+  env_dir=$1
+  whitelist_regex=${2:-'^(CLOUDINARY_API_KEY|CLOUDINARY_CLOUD_NAME|GOOGLE_MAPS_BROWSER_API_KEY|RAILS_ENV)$'}
+  blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+  if [ -d "$env_dir" ]; then
+    for e in $(ls $env_dir); do
+      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+      export "$e=$(cat $env_dir/$e)"
+      :
+    done
+  fi
+}
+
+echo "-----> Importing ENV"
+export_env_dir
 echo "-----> Checking node version"
 node -v | indent
 echo "-----> Checking npm version"
